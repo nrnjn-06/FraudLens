@@ -1,0 +1,84 @@
+# ==============================================================================
+# FraudLens .gitignore — Strict exclusions for security, caches & large data
+# ==============================================================================
+
+# Python bytecode & runtime
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+temp_out/
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Node & Frontend
+node_modules/
+frontend/node_modules/
+frontend/dist/
+.vite/
+
+# Datasets and Large Training Corpora (Documented in docs/datasets.md)
+dataset/
+datasets/
+data/raw/
+data/processed/
+*.csv
+*.tsv
+*.zip
+*.tar.gz
+*.parquet
+
+# Local SQLite Database (Contains local user accounts, salted hashes, sessions)
+*.db
+*.sqlite
+*.sqlite3
+data/*.db
+
+# ML Saved Models & Serialized Artifacts
+# General binary model exclusion with explicit whitelist for the two production models
+models/
+*.joblib
+*.pkl
+*.bin
+*.onnx
+*.h5
+!backend/models/message_model.joblib
+!backend/models/url_model.joblib
+!backend/models/*.json
+
+# Environment secrets & local configurations
+.env
+.env.local
+.env.*.local
+
+# Operating System & IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
