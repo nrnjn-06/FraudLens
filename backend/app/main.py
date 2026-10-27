@@ -4,6 +4,7 @@ Unified ML-Based Fraud Detection Platform.
 """
 
 from contextlib import asynccontextmanager
+import os
 from typing import AsyncGenerator
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -49,21 +50,28 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# Enable CORS for local Vite development frontend
+# Configure CORS for local development and deployed cloud frontends (Vercel, etc.)
+custom_origins_env = os.getenv("ALLOWED_ORIGINS", "")
+allowed_origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:4173",
+    "http://127.0.0.1:4173",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+if custom_origins_env:
+    for o in custom_origins_env.split(","):
+        clean_origin = o.strip()
+        if clean_origin and clean_origin not in allowed_origins:
+            allowed_origins.append(clean_origin)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://localhost:4173",
-        "http://127.0.0.1:4173",
-        "http://localhost:8000",
-        "http://127.0.0.1:8000",
-        "*",
-    ],
-    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
+    allow_origins=allowed_origins,
+    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1|([a-zA-Z0-9-]+\.)*vercel\.app)(:\d+)?$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

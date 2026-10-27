@@ -13,6 +13,7 @@ import logging
 import re
 from typing import List, Optional
 from urllib.parse import parse_qs, urlparse
+from pathlib import Path
 import tldextract
 
 from backend.app.schemas.common import (
@@ -48,9 +49,12 @@ from backend.app.services.url_model_loader import (
 
 logger = logging.getLogger(__name__)
 
+_proj_root = Path(__file__).resolve().parent.parent.parent.parent
+_tld_cache_dir = str(_proj_root / "data" / "processed" / "urls" / ".tld_cache")
+
 # Offline TLDExtract instance (strictly zero network egress)
 _offline_tld_extract = tldextract.TLDExtract(
-    cache_dir="D:/Projects/usability/data/processed/urls/.tld_cache",
+    cache_dir=_tld_cache_dir,
     suffix_list_urls=(),
 )
 

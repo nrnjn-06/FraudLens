@@ -11,6 +11,7 @@ import math
 import re
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import parse_qs, urlparse
+from pathlib import Path
 import tldextract
 
 # Fixed list of 34 deterministic feature names in canonical schema order
@@ -127,9 +128,12 @@ SUSPICIOUS_TLDS: set[str] = {
     "stream",
 }
 
+_proj_root = Path(__file__).resolve().parent.parent.parent.parent
+_tld_cache_dir = str(_proj_root / "data" / "processed" / "urls" / ".tld_cache")
+
 # Offline TLDExtract singleton: suffix_list_urls=() guarantees zero network egress
 _offline_tld_extract = tldextract.TLDExtract(
-    cache_dir="D:/Projects/usability/data/processed/urls/.tld_cache",
+    cache_dir=_tld_cache_dir,
     suffix_list_urls=(),
 )
 

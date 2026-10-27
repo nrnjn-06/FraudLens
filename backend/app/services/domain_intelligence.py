@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 import ipaddress
 import logging
+from pathlib import Path
 import re
 import socket
 import ssl
@@ -31,9 +32,12 @@ from backend.app.services.url_features import is_ip_host
 
 logger = logging.getLogger(__name__)
 
+_proj_root = Path(__file__).resolve().parent.parent.parent.parent
+_tld_cache_dir = str(_proj_root / "data" / "processed" / "urls" / ".tld_cache")
+
 # Offline TLDExtract instance (strictly zero network egress for public-suffix parsing)
 _offline_tld_extract = tldextract.TLDExtract(
-    cache_dir="D:/Projects/usability/data/processed/urls/.tld_cache",
+    cache_dir=_tld_cache_dir,
     suffix_list_urls=(),
 )
 

@@ -10,13 +10,17 @@ Guarantees:
 """
 
 from dataclasses import dataclass, field
+from pathlib import Path
 import re
 from typing import Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 import tldextract
 
+_proj_root = Path(__file__).resolve().parent.parent.parent.parent
+_tld_cache_dir = str(_proj_root / "data" / "processed" / "urls" / ".tld_cache")
+
 _tld_parser = tldextract.TLDExtract(
-    cache_dir="D:/Projects/usability/data/processed/urls/.tld_cache",
+    cache_dir=_tld_cache_dir,
     suffix_list_urls=(),
 )
 
