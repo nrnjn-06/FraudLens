@@ -59,8 +59,6 @@ data/processed/
 data/*.db
 
 # ML Saved Models & Serialized Artifacts
-# General binary model exclusion with explicit whitelist for the two production models
-models/
 *.joblib
 *.pkl
 *.bin
