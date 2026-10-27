@@ -21,12 +21,11 @@ COPY backend/requirements.txt ./backend/requirements.txt
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r ./backend/requirements.txt
 
-# Copy backend source code, ML models, and reference data
+# Copy backend source code and ML models
 COPY backend ./backend
-COPY data ./data
 
-# Ensure data directory exists for local SQLite database
-RUN mkdir -p /app/data
+# Create runtime data directory for SQLite database and cache
+RUN mkdir -p /app/data/processed/urls/.tld_cache
 
 # Default port (Render/Railway inject $PORT at runtime)
 ENV PORT=8000
